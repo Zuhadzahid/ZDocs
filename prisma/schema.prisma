@@ -1,0 +1,170 @@
+// Data model for the collaborative document editor.
+//
+// Three tables are enough for the product slice:
+//   User           – accounts (email + password, or Google sign-in)
+//   Session        – server-side sessions referenced by an httpOnly cookie
+//   Document       – owned by one user; content is Tiptap/ProseMirror JSON
+//   DocumentShare  – grants another user VIEWER or EDITOR access
+//   DocumentStar   – per-user bookmark ("Starred" view)
+//   DocumentView   – per-user last-opened timestamp ("Recent" view)
+//   DocumentVersion – snapshots of content for version history
+//   DocumentPresence – heartbeat rows for "who is here" indicators
+//   ShareLink      – role-carrying invite links
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ShareRole {
+  VIEWER
+  EDITOR
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  color        String   @default("#2563eb")
+  /// scrypt hash; null for accounts that only ever signed in with Google
+  passwordHash String?
+  /// "google" when the account was created via Google sign-in
+  provider     String   @default("password")
+  image        String?
+  createdAt    DateTime @default(now())
+
+  documents  Document[]         @relation("OwnedDocuments")
+  shares     DocumentShare[]
+  sessions   Session[]
+  stars      DocumentStar[]
+  views      DocumentView[]
+  versions   DocumentVersion[]
+  presence   DocumentPresence[]
+  shareLinks ShareLink[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  /// sha256 of the random token stored in the cookie
+  tokenHash String   @unique
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model DocumentStar {
+  userId     String
+  documentId String
+  createdAt  DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@id([userId, documentId])
+  @@index([documentId])
+}
+
+model DocumentView {
+  userId     String
+  documentId String
+  viewedAt   DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@id([userId, documentId])
+  @@index([userId, viewedAt(sort: Desc)])
+  @@index([documentId])
+}
+
+model Document {
+  id        String   @id @default(cuid())
+  title     String
+  /// Tiptap document JSON ({ type: "doc", content: [...] })
+  content   Json
+  /// First ~200 chars of plain text, for list previews
+  excerpt   String   @default("")
+  ownerId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  owner      User               @relation("OwnedDocuments", fields: [ownerId], references: [id], onDelete: Cascade)
+  shares     DocumentShare[]
+  stars      DocumentStar[]
+  views      DocumentView[]
+  versions   DocumentVersion[]
+  presence   DocumentPresence[]
+  shareLinks ShareLink[]
+
+  // Dashboard lists are "my documents ordered by last edit"; this index serves that directly.
+  @@index([ownerId, updatedAt(sort: Desc)])
+}
+
+model DocumentShare {
+  documentId String
+  userId     String
+  role       ShareRole @default(VIEWER)
+  createdAt  DateTime  @default(now())
+
+  document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([documentId, userId])
+  @@index([userId])
+}
+
+model DocumentVersion {
+  id         String   @id @default(cuid())
+  documentId String
+  /// Snapshot of Document.content at the time
+  content    Json
+  title      String
+  /// Who made the edits captured by this snapshot (null if the account was deleted)
+  authorId   String?
+  /// "autosave" | "restore" | "import"; drives the label in the history panel
+  reason     String   @default("autosave")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  author   User?    @relation(fields: [authorId], references: [id], onDelete: SetNull)
+
+  @@index([documentId, createdAt(sort: Desc)])
+}
+
+model DocumentPresence {
+  documentId String
+  userId     String
+  lastSeenAt DateTime @default(now())
+
+  document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([documentId, userId])
+  @@index([documentId, lastSeenAt])
+}
+
+model ShareLink {
+  id          String    @id @default(cuid())
+  /// Random URL-safe token; the link is /share/<token>
+  token       String    @unique
+  documentId  String
+  role        ShareRole @default(VIEWER)
+  createdById String
+  createdAt   DateTime  @default(now())
+  revokedAt   DateTime?
+
+  document  Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  createdBy User     @relation(fields: [createdById], references: [id], onDelete: Cascade)
+
+  @@index([documentId])
+}
