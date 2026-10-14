@@ -206,5 +206,4 @@ src/lib/
 e2e/                      Playwright specs
 samples/                  files to try the import with
 design/                   original logo artwork
-.claude/skills/           design-engineering skills used during the build (MIT)
 ```
