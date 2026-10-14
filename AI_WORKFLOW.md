@@ -10,7 +10,6 @@ acceptance check was mine, and the test suite is what proved the result rather t
 | Tool | Role |
 |---|---|
 | **Claude Code** (Claude Fable 5.1) in the Claude desktop app | Pair programmer for the whole build: scaffolding, route handlers, components, tests, docs. It also drove a built-in browser and `curl` to verify behaviour |
-| **Emil Kowalski's design-engineering skills** (`.claude/skills`, MIT, from github.com/emilkowalski/skills) | Loaded into Claude Code for the UI pass: animation decision framework, button press feedback, stagger rules, "pick a library, don't hand-roll" |
 | **shadcn/ui CLI** | Component scaffolding (not AI, but AI chose and wired the components) |
 
 No AI-generated images or copy outside this repository. The logo was supplied by me; AI
@@ -61,7 +60,7 @@ Paraphrased from the session, in the order they were used:
 1. *"This is a take-home I want to crack. Tell me what we have to do, using the framing from this system-design video."* → the plan, stack and cuts.
 2. *"Start the thing."* → scaffold, schema, seed, auth, API, pages, verification in the browser.
 3. *"Now I want proper authentication, a real person can authenticate with Gmail or any other email. Rename to ZDocs. Keep the three test users."* → scrypt passwords, Session table, optional Google OAuth, landing page.
-4. *"Add the Axiforma fonts and the logo everywhere, add shadcn/ui and these design skills, build a Google-Docs-like sidebar: New document, My documents, Shared with me, Recent, Starred. Make it usable by a hundred thousand people concurrently."* → design system, dashboard, indexes, capped lists, the scaling section.
+4. *"Add the Axiforma fonts and the logo everywhere, add shadcn/ui, build a Google-Docs-like sidebar: New document, My documents, Shared with me, Recent, Starred. Make it usable by a hundred thousand people concurrently."* → design system, dashboard, indexes, capped lists, the scaling section.
 5. *"Confirm: is this written as a senior engineer or a full-stack developer?"* → an honest list of what a senior reviewer would flag, which became the next round of work.
 6. *"Add Playwright so it becomes more good."* → sixteen specs.
 7. *"Tell me what takes more time to build out of these five stretch features."* → a ranked estimate.
