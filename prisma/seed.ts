@@ -1,5 +1,9 @@
 import { PrismaClient } from "@prisma/client";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { hashPassword } from "../src/lib/password";
+import { markdownToHtml } from "../src/lib/import";
+import { documentToExcerpt, htmlToDocument } from "../src/lib/tiptap-server";
 
 const prisma = new PrismaClient();
 
@@ -96,6 +100,40 @@ async function main() {
     });
   }
 
+  // The project's own documentation, imported as real documents owned by Alice
+  // and shared with Bob (edit) and Carol (view), so reviewers can exercise the
+  // sharing model on substantial content. Re-running the seed refreshes them.
+  const PROJECT_DOCS = [
+    { id: "doc_readme", file: "README.md", title: "ZDocs · README" },
+    { id: "doc_architecture", file: "ARCHITECTURE.md", title: "ZDocs · Architecture" },
+    { id: "doc_ai_workflow", file: "AI_WORKFLOW.md", title: "ZDocs · AI Workflow" },
+    { id: "doc_testing", file: "TESTING.md", title: "ZDocs · Testing" },
+    { id: "doc_submission", file: "SUBMISSION.md", title: "ZDocs · Submission" },
+    { id: "doc_walkthrough", file: "WALKTHROUGH_SCRIPT.md", title: "ZDocs · Walkthrough Script" },
+  ];
+  const root = join(__dirname, "..");
+  for (const d of PROJECT_DOCS) {
+    const markdown = readFileSync(join(root, d.file), "utf8");
+    const content = htmlToDocument(markdownToHtml(markdown));
+    const data = { title: d.title, ownerId: "user_alice", content, excerpt: documentToExcerpt(content) };
+    await prisma.document.upsert({ where: { id: d.id }, update: data, create: { id: d.id, ...data } });
+    for (const share of [
+      { userId: "user_bob", role: "EDITOR" as const },
+      { userId: "user_carol", role: "VIEWER" as const },
+    ]) {
+      await prisma.documentShare.upsert({
+        where: { documentId_userId: { documentId: d.id, userId: share.userId } },
+        update: { role: share.role },
+        create: { documentId: d.id, ...share },
+      });
+    }
+    await prisma.documentVersion.upsert({
+      where: { id: `${d.id}_v0` },
+      update: { content, title: d.title },
+      create: { id: `${d.id}_v0`, documentId: d.id, content, title: d.title, authorId: "user_alice", reason: "import" },
+    });
+  }
+
   // Alice has starred the roadmap and recently opened both of her documents.
   await prisma.documentStar.upsert({
     where: { userId_documentId: { userId: "user_alice", documentId: "doc_roadmap" } },
@@ -110,7 +148,9 @@ async function main() {
     });
   }
 
-  console.log(`Seeded ${USERS.length} users, ${docs.length} documents, ${shares.length} shares.`);
+  console.log(
+    `Seeded ${USERS.length} users, ${docs.length + PROJECT_DOCS.length} documents (${PROJECT_DOCS.length} from project docs), ${shares.length + PROJECT_DOCS.length * 2} shares.`,
+  );
 }
 
 main()

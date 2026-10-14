@@ -1,4 +1,4 @@
-import { generateJSON, generateHTML } from "@tiptap/html";
+import { generateJSON, generateHTML } from "@tiptap/html/server";
 import { createExtensions } from "./editor-extensions";
 import type { JSONContent } from "@tiptap/core";
 

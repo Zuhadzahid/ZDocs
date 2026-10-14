@@ -1,63 +1,100 @@
-# Submission contents
+# Submission
 
-ZDocs: lightweight collaborative document editor for the Ajaia Full Stack Product Engineer assignment.
+**ZDocs** — lightweight collaborative document editor, built for the Ajaia Full Stack
+Product Engineer assignment by Zuhad Zahid.
 
-## Links
+## 1. Links
 
-- **Live product:** `<fill in Vercel URL>`
-- **Source repository:** `<fill in GitHub URL>`
-- **Walkthrough video:** see `VIDEO_URL.txt`
+| Item | Link |
+|---|---|
+| Live application | _to be added after Vercel deployment_ |
+| GitHub repository | https://github.com/Zuhadzahid/ZDocs |
+| Walkthrough video | see `VIDEO_URL.txt` (unlisted) |
 
-## Test accounts
+## 2. Demo accounts
 
-Open the live URL and sign in. All demo accounts use the password `demo1234`. You can also create your own account with any email.
+Open the live URL and click **Sign in**. All demo accounts use the password **`demo1234`**.
+On the sign-in form, the **Alice / Bob / Carol** chips fill the credentials for you. You can
+also create your own account with any email.
 
 | Account | Email | What to try |
 |---|---|---|
-| Alice Chen | alice@ajaia.test | Owns two documents; share "New hire onboarding checklist" with Carol |
-| Bob Martinez | bob@ajaia.test | Editor on "Q4 Product Roadmap"; cannot share or delete it |
-| Carol Okafor | carol@ajaia.test | Viewer on "Q4 Product Roadmap"; read-only editor |
+| Alice Chen | alice@ajaia.test | Owner of the roadmap, the onboarding checklist and the six project documents. Share, create links, restore history, export |
+| Bob Martinez | bob@ajaia.test | Editor on the roadmap and the project docs; cannot share or delete them. Owns "Weekly sync notes" |
+| Carol Okafor | carol@ajaia.test | Viewer on the roadmap and the project docs; read-only editor, no toolbar, Restore hidden |
 
-To see two users at once, sign in with a second account in an incognito window.
+To see two users at once, sign in with a second account in an incognito window. Open the
+same document in both to see the **Here now** presence avatars.
 
-## What is in this folder
+The six project documents (README, Architecture, AI Workflow, Testing, Submission,
+Walkthrough Script) are seeded into Alice's account from these very files and shared with
+Bob (edit) and Carol (view), so the sharing model can be reviewed on real content.
+
+## 3. What is in the Drive folder
 
 | Item | File |
 |---|---|
-| Source code | `collab-docs/` (or the GitHub repo) |
+| Source code | `ZDocs/` (also the GitHub repository) |
 | Setup and run instructions | `README.md` |
-| Architecture note | `ARCHITECTURE.md` |
+| Architecture note with four diagrams | `ARCHITECTURE.md` |
 | AI workflow note | `AI_WORKFLOW.md` |
-| This list | `SUBMISSION.md` |
+| Testing note with results | `TESTING.md` |
+| This file | `SUBMISSION.md` |
+| Video recording plan | `WALKTHROUGH_SCRIPT.md` |
 | Video link | `VIDEO_URL.txt` |
 | Sample files for the import feature | `samples/` |
 
-## Status
+## 4. Implemented features
 
-**Working end to end**
+**Core**
 
-- Email + password sign-up and sign-in with server-side sessions; optional Google sign-in
-- Landing page with embedded sign-in / sign-up card; ZDocs branding, Axiforma type, shadcn/ui
+- Email + password sign-up and sign-in with scrypt hashing and server-side sessions; optional Google sign-in
+- Landing page with embedded sign-in / sign-up card; ZDocs branding, Axiforma typeface, shadcn/ui
 - Dashboard with Google-Docs-style sidebar: New document, My documents, Shared with me, Recent, Starred
-- Create, rename, edit, delete, reopen, star documents
-- Rich text: bold, italic, underline, strikethrough, headings 1-3, bulleted and numbered lists, quotes, undo/redo
-- Autosave with status indicator and conflict detection (409 + reload banner)
-- Import `.txt`, `.md`, `.docx` (2 MB cap) as a new document, structure preserved
-- Sharing with Can edit / Can view, owner-only management, owned vs shared sections
-- Version history with preview and restore
+- Create, rename, delete, reopen, star documents
+- Rich text: bold, italic, underline, strikethrough, headings 1–3, bulleted and numbered lists, quotes, code blocks, undo/redo
+- Autosave with status indicator and conflict detection (409 plus reload banner)
+- Import `.txt`, `.md`, `.docx` (2 MB cap) as a new document with structure preserved; clear rejection of other types
+- Sharing by email with **Can edit** / **Can view**; owner-only management; owned vs shared sections; access-denied and not-found pages
+- Postgres persistence on Neon; seeded demo data
+- Validation and error handling on every route
+
+**Stretch**
+
+- Version history with preview and restore (edits coalesced per author per two minutes, newest 50 kept)
 - Export to Markdown and PDF
 - Share-by-link with a role, revocable
-- Presence indicators (who has the document open)
-- Postgres persistence; seeded demo data
-- Validation and error handling on every route; access-denied and not-found pages
-- 22 unit tests (`npm test`) and 11 Playwright end-to-end tests (`npm run test:e2e`)
-- Scaling posture documented in ARCHITECTURE.md (pooling, indexes, capped lists, rate limiting)
+- Presence indicators showing who has the document open
+
+**Quality**
+
+- 31 Vitest unit tests and 16 Playwright end-to-end specs, all passing (see `TESTING.md`)
+- Scaling posture documented: pooled connections, indexes, capped lists, rate limiting, deferred side effects
 - Deployed on Vercel with Neon Postgres
 
-**Incomplete / intentionally not built**
+## 5. Known limitations
 
-- Email verification, password reset, sign-in rate limiting
-- Real-time co-editing (conflicts are detected, not merged)
-- Comments and suggestion mode, live cursors / real-time co-editing, folders, search
+- No real-time co-editing or live cursors; concurrent edits are detected, not merged
+- No comments or suggestion mode
+- Import is text-focused: images in `.docx` are dropped, Markdown tables flatten to text
+- No email verification, password reset or MFA; sign-in rate limiting is per server instance
+- Schema applied with `prisma db push` rather than migrations
+- PDF layout is structurally faithful, not pixel-identical to the editor
 
-**Next 2-4 hours:** comments anchored to text, live cursors via Yjs, password reset. Details in `ARCHITECTURE.md`.
+**With another 2–4 hours:** live cursors with Yjs, then comments anchored to text, then
+password reset. Details and estimates in `ARCHITECTURE.md`.
+
+## 6. Final submission checklist
+
+- [x] Source code pushed to GitHub as Zuhad Zahid
+- [x] `README.md` with overview, stack, setup, environment variables, run and test instructions, limitations
+- [x] `ARCHITECTURE.md` with system architecture, ER diagram, access flowchart, save sequence diagram, tradeoffs
+- [x] `AI_WORKFLOW.md` with tools, prompts, verification and corrections
+- [x] `TESTING.md` with frameworks, commands, coverage, manual checklist and results
+- [x] `WALKTHROUGH_SCRIPT.md` with the recording plan
+- [x] Demo accounts seeded and documented
+- [x] Sample import files included
+- [ ] Deployed to Vercel; live URL added to `README.md` and this file
+- [ ] Demo data seeded against the production database
+- [ ] Walkthrough video recorded; link added to `VIDEO_URL.txt` and this file
+- [ ] Google Drive folder created with all materials and both links

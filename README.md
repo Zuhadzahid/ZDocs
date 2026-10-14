@@ -1,166 +1,210 @@
 # ZDocs
 
-A lightweight collaborative document editor inspired by Google Docs, built for the
-Ajaia Full Stack Product Engineer assignment.
+A lightweight, Google-Docs-inspired collaborative document editor, built as the product
+engineering demo for the **Full Stack Product Engineer** role at **Ajaia**.
 
-**Live demo:** _see `SUBMISSION.md`_ · **Walkthrough video:** _see `VIDEO_URL.txt`_
+- **Live application:** _added in `SUBMISSION.md` after deployment_
+- **Repository:** https://github.com/Zuhadzahid/ZDocs
+- **Walkthrough video:** see `VIDEO_URL.txt`
 
-## What it does
+Companion documents: [ARCHITECTURE.md](ARCHITECTURE.md) · [AI_WORKFLOW.md](AI_WORKFLOW.md) ·
+[TESTING.md](TESTING.md) · [SUBMISSION.md](SUBMISSION.md) · [WALKTHROUGH_SCRIPT.md](WALKTHROUGH_SCRIPT.md)
 
-| Area | Behaviour |
+---
+
+## 1. Project overview
+
+ZDocs lets a team create, edit, import and share rich-text documents in the browser. The
+scope was chosen deliberately: depth in editing, sharing and persistence rather than
+breadth across every Google Docs feature. Every document route goes through one
+authorization chokepoint, content is stored as structured JSON so formatting round-trips
+exactly, and the whole stack runs on free tiers so a reviewer can test it without paying
+for anything.
+
+## 2. Features
+
+### Core
+
+| Area | What you can do |
 |---|---|
-| Documents | Create, rename (inline on the card or in the editor header), delete, reopen |
-| Editing | Rich text with bold, italic, underline, strikethrough, headings 1-3, bulleted and numbered lists, quotes, undo/redo. Autosaves 800 ms after you stop typing; status shown in the header |
-| Import | Drop a `.txt`, `.md` or `.docx` file (max 2 MB) on the home page and it becomes a new editable document. Headings, emphasis and lists survive the import. Other file types are rejected with a clear message |
-| Sharing | Owner shares with another account as **Can edit** or **Can view**. Home page separates **My documents** from **Shared with me**. Viewers get a read-only editor; editors cannot share or delete |
-| Persistence | Postgres via Prisma. Content is stored as ProseMirror JSON so formatting round-trips exactly |
-| Conflicts | Saves carry the version timestamp the client loaded. If someone else saved in between, the API returns 409 and the editor shows a reload banner instead of overwriting |
+| Documents | Create, rename (on the card or in the editor header), delete, reopen, star |
+| Editing | Bold, italic, underline, strikethrough, headings 1–3, bulleted and numbered lists, quotes, code blocks, undo/redo. Autosave 800 ms after you stop typing with a visible status |
+| Conflict safety | Each save carries the version it was based on. If someone else saved first the API returns 409 and the editor shows a reload banner instead of overwriting |
+| Import | Drop a `.txt`, `.md` or `.docx` (max 2 MB) onto the dashboard and it becomes a new editable document; headings, emphasis, lists and code blocks survive. Other types are rejected with a clear message |
+| Sharing | Owner grants **Can edit** or **Can view** by email. Viewers get a read-only editor; editors cannot share or delete. Dashboard separates owned from shared documents |
+| Dashboard | Google-Docs-style sidebar: New document, My documents, Shared with me, Recent, Starred |
+| Authentication | Sign up with any email and password (scrypt-hashed), server-side sessions in an httpOnly cookie, optional Google sign-in when OAuth keys are configured |
+| Persistence | Postgres via Prisma on Neon. Documents, shares, stars, views, versions and sessions all survive refresh and redeploys |
 
-| Dashboard | Google-Docs-style sidebar: New document, My documents, Shared with me, Recent, Starred. Lists are capped at 60 and indexed for the common queries |
-| Version history | Each save is snapshotted; edits by the same person within two minutes are grouped. Preview any version and restore it (the restore itself is recorded). Newest 50 kept |
-| Export | Download as Markdown (.md) or PDF (.pdf) from the editor header. PDF is rendered server-side from the document JSON, no headless browser |
-| Share links | Owner creates a link that grants Can view or Can edit to anyone who opens it while signed in. Links can be revoked; access already granted is kept |
-| Presence | Avatars of everyone who has the document open, refreshed every 15 seconds via heartbeat (no WebSocket service needed) |
-| Auth | Real accounts: sign up with any email and a password (scrypt-hashed), or with Google when OAuth credentials are configured. Sessions are server-side rows referenced by an httpOnly cookie |
+### Stretch features shipped
 
-To act as two users at once, sign in with a second account in an incognito window.
+| Feature | Behaviour |
+|---|---|
+| Version history | Every save is snapshotted; edits by the same person within two minutes are grouped into one version. Preview any version and restore it; the restore is itself recorded. Newest 50 kept |
+| Export | Download as **Markdown** or **PDF** from the editor header. PDF is rendered server-side from the document JSON with no headless browser |
+| Share by link | Owner creates a link that grants Can view or Can edit to anyone who opens it while signed in. Links can be revoked; access already granted is kept |
+| Presence | Avatars of everyone who currently has the document open, refreshed by a 15-second heartbeat |
 
-## Demo accounts
+### Deliberately not built
 
-All three use the password `demo1234`.
+Comments and suggestion mode, live cursors and real-time co-editing, email verification and
+password reset, folders, search. Reasons are in `ARCHITECTURE.md`.
 
-| Name | Email | Owns | Shared with them |
-|---|---|---|---|
-| Alice Chen | alice@ajaia.test | Q4 Product Roadmap, New hire onboarding checklist | Weekly sync notes (view) |
-| Bob Martinez | bob@ajaia.test | Weekly sync notes | Q4 Product Roadmap (edit) |
-| Carol Okafor | carol@ajaia.test | – | Q4 Product Roadmap (view) |
+## 3. Technology stack
 
-You can also create your own account from the landing page.
+| Layer | Choice | Why |
+|---|---|---|
+| Framework | Next.js 16 (App Router), React 19, TypeScript | UI, API route handlers and server rendering in one deployable unit |
+| Editor | Tiptap 3 on ProseMirror | Battle-tested schema and commands; stores JSON, which makes versioning and export trivial |
+| Database | PostgreSQL on Neon, Prisma 6 | Relational model fits users / documents / shares; Neon is free and pools connections for serverless |
+| UI | Tailwind CSS 4, shadcn/ui (Base UI), lucide icons, Sonner toasts | Accessible primitives without hand-rolling focus management |
+| Typeface and brand | Axiforma (self-hosted via `next/font/local`), ZDocs logo | Product identity |
+| Validation | Zod | Schema validation at every API boundary |
+| Import / export | mammoth (.docx), marked (.md), Turndown (Markdown out), @react-pdf/renderer (PDF out) | Pure JavaScript; nothing to compile on Vercel |
+| Testing | Vitest (unit), Playwright (end-to-end) | See `TESTING.md` |
+| Hosting | Vercel | Git-based deploys, serverless scaling |
 
-## Run locally
+## 4. Installation and setup
 
-Requirements: Node 20+ and a Postgres connection string (Neon free tier works, or any local Postgres).
+Requirements: Node 20 or newer and a Postgres connection string. Neon's free tier works out
+of the box; any local Postgres also works.
 
 ```bash
-npm install
+git clone https://github.com/Zuhadzahid/ZDocs.git
 ```
 
-Create `.env` from the example and set `DATABASE_URL`:
+```bash
+cd ZDocs && npm install
+```
+
+Create your environment file:
 
 ```bash
 cp .env.example .env
 ```
 
-Push the schema and seed demo data:
+Open `.env` and set `DATABASE_URL` (see the next section). Then create the tables and seed
+the demo accounts and documents:
 
 ```bash
 npm run db:push && npm run db:seed
 ```
 
-Start the app:
+Start the development server:
 
 ```bash
 npm run dev
 ```
 
-Open http://localhost:3000, create an account or sign in with a demo account.
+Open http://localhost:3000, sign in with a demo account or create your own.
 
-### Optional: Google sign-in
+**No Postgres handy?** `npx prisma dev` starts a local Postgres-compatible server and prints a
+connection string. Append `&pgbouncer=true` to it before putting it in `.env`.
 
-Create an OAuth client (type **Web application**) in Google Cloud Console, add
-`http://localhost:3000/api/auth/google/callback` (and your production origin) as an
-authorised redirect URI, then set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in `.env`.
-The **Continue with Google** button appears automatically when both are set. A Google
-sign-in with the same email as an existing password account signs into that account.
+## 5. Environment variables
 
-**No Postgres handy?** `npx prisma dev` starts a local Postgres-compatible server and
-prints a connection string. Append `&pgbouncer=true` to that string before putting it in
-`.env` (it runs behind a transaction pooler).
+| Variable | Required | Purpose |
+|---|---|---|
+| `DATABASE_URL` | Yes | Postgres connection string. Use Neon's pooled URL (host contains `-pooler`) |
+| `GOOGLE_CLIENT_ID` | No | Enables the **Continue with Google** button when set together with the secret |
+| `GOOGLE_CLIENT_SECRET` | No | Google OAuth client secret |
+| `APP_URL` | No | Public origin for the Google redirect URI when behind a proxy that rewrites the host. Not needed on Vercel |
 
-## Tests
+Google setup: create an OAuth client (type **Web application**) in Google Cloud Console and
+add `<origin>/api/auth/google/callback` as an authorised redirect URI. A Google sign-in with
+the same email as an existing password account signs into that account.
 
-Unit tests (Vitest, no database needed):
+## 6. Demo accounts
 
-```bash
-npm test
-```
+All three use the password **`demo1234`**. Sign in with a second account in an incognito
+window to see sharing and presence between two people.
 
-End-to-end tests (Playwright, Chromium). They start the dev server if it is not already running and use the database in `.env`, creating and deleting their own documents:
+| Name | Email | Owns | Shared with them |
+|---|---|---|---|
+| Alice Chen | alice@ajaia.test | Q4 Product Roadmap, New hire onboarding checklist, and the six project documents (README, Architecture, AI Workflow, Testing, Submission, Walkthrough) | Weekly sync notes (view) |
+| Bob Martinez | bob@ajaia.test | Weekly sync notes | Q4 Product Roadmap (edit), all six project documents (edit) |
+| Carol Okafor | carol@ajaia.test | – | Q4 Product Roadmap (view), all six project documents (view) |
+
+## 7. How to run and test
+
+| Command | What it does |
+|---|---|
+| `npm run dev` | Development server on port 3000 |
+| `npm run build` | Production build (runs `prisma generate` first) |
+| `npm start` | Serve the production build |
+| `npm test` | Vitest unit tests (no database needed) |
+| `npm run test:e2e` | Playwright end-to-end tests in Chromium against the database in `.env` |
+| `npm run test:e2e:ui` | Playwright in interactive UI mode |
+| `npm run lint` | ESLint |
+| `npm run db:push` | Apply the Prisma schema to the database |
+| `npm run db:seed` | Seed demo users, documents, shares, and the project docs |
+| `npm run db:cleanup-e2e` | Remove throwaway accounts created by the sign-up e2e test |
+| `npm run db:studio` | Prisma Studio to browse the data |
+
+Before the first e2e run install the browser:
 
 ```bash
 npx playwright install chromium
 ```
 
-```bash
-npm run test:e2e
-```
+Full test design, coverage, and the latest results are in `TESTING.md`.
 
-The sign-up spec creates a throwaway account each run; remove them with `npm run db:cleanup-e2e`.
+## 8. Deployment
 
-The e2e suite covers version history (coalescing, preview, restore), Markdown and PDF export including access checks, share links (sign-in bounce, grant, revoke, invalid token), presence between two signed-in browsers, and: landing page and auth card, wrong password, demo-account sign-in, sign-out and protected-route redirect, sign-up and duplicate-email refusal, create-type-format-autosave-reload-rename, star and the Starred view, API validation, markdown import structure, rejected uploads, and the full sharing matrix (viewer read-only, unshared user denied, editor gets the toolbar).
+The app is deployed on Vercel with a Neon Postgres database. The live URL is in
+`SUBMISSION.md`.
 
-Vitest covers the access-resolution logic that gates every document route
-(`src/lib/permissions.ts`), the file import pipeline (`src/lib/import.ts`) including
-markdown structure surviving the conversion into editor JSON and rejection of unsupported
-or oversized files, and password hashing plus the sign-up and sign-in validation rules
-(`src/lib/password.ts`, `src/lib/validation.ts`), plus the sign-in rate limiter.
+To deploy your own copy:
 
-## Deploy (Vercel + Neon)
+1. Create a Neon project and copy the **pooled** connection string.
+2. Import the GitHub repository into Vercel. Keep the default build command.
+3. Add `DATABASE_URL` (and optionally the Google variables) as Vercel environment variables.
+4. From your machine, with the same `DATABASE_URL` in `.env`, run `npm run db:push && npm run db:seed` once.
+5. Deploy. Sign in with a demo account.
 
-1. Create a Neon project and copy the pooled connection string.
-2. Import the GitHub repo into Vercel. Build command is the default (`npm run build`, which runs `prisma generate` first).
-3. Add `DATABASE_URL` (and optionally `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET`) as environment variables in Vercel.
-4. From your machine, with the same `DATABASE_URL` in `.env`, run `npm run db:push && npm run db:seed` once to create tables and demo accounts.
-5. Deploy. Sign in with a demo account or create a new one.
+## 9. Known limitations
 
-## Design system
+- **No real-time co-editing.** Concurrent edits are detected (409 and a reload banner), not merged. Presence shows who is here, not live cursors.
+- **No comments or suggestion mode.** Judged too deep in the editor engine for the timebox.
+- **Import is text-focused.** Three formats, 2 MB cap, images in `.docx` are dropped, Markdown tables flatten to text because the editor schema has no table node.
+- **Auth is minimal.** No email verification, password reset, or multi-factor. The sign-in rate limiter is per server instance.
+- **Schema is applied with `prisma db push`.** Fine for a demo; a production deployment would switch to migrations.
+- **PDF layout** is faithful to the structure but not pixel-identical to the editor.
 
-- **Typeface:** Axiforma (self-hosted via `next/font/local`, `src/fonts/axiforma`).
-- **Components:** [shadcn/ui](https://ui.shadcn.com) on Base UI (`src/components/ui`), lucide icons, Sonner toasts.
-- **Brand:** colours sampled from the ZDocs logo (`public/logo.png`, `public/logo-mark.png`; original in `design/`).
-- **Motion and UI craft:** Emil Kowalski's design-engineering skills are vendored in `.claude/skills` (MIT) and were applied to the landing page, cards and dialogs.
-
-## Project layout
+## 10. Project layout
 
 ```
 prisma/schema.prisma      data model (User, Session, Document, DocumentShare, DocumentStar,
                           DocumentView, DocumentVersion, DocumentPresence, ShareLink)
-prisma/seed.ts            demo users, documents and shares
-src/app/                  routes (App Router)
+prisma/seed.ts            demo users, documents, shares, and the six project docs
+src/app/
   page.tsx                landing page (signed out) or dashboard with ?view= (signed in)
   login/, signup/         email + password auth pages
   actions/auth.ts         signUp / signIn / signOut server actions
   api/auth/google/        Google OAuth start + callback
   docs/[id]/page.tsx      editor page; renders access-denied for 403
+  share/[token]/          invite-link landing page
   api/documents/...       REST handlers: create, get/patch/delete, shares, star, import,
                           versions (+restore), export, presence, links
-  share/[token]/          invite-link landing page
-src/components/           landing, auth card, sidebar, dashboard, cards, editor, share dialog
+src/components/           landing, auth card, sidebar, dashboard, cards, editor, share dialog,
+                          history panel, export menu, presence avatars
   ui/                     shadcn/ui primitives
 src/lib/
-  auth.ts                 session create/lookup/destroy (httpOnly cookie + Session table)
-  password.ts             scrypt hashing, session tokens (unit tested)
-  google.ts               minimal Google OAuth client
-  documents.ts            dashboard queries (mine / shared / recent / starred)
-  versions.ts             snapshot coalescing, pruning, restore (unit tested)
-  export.ts, pdf.tsx      Markdown via Turndown, PDF via @react-pdf/renderer (unit tested)
-  presence.ts             heartbeat presence (unit tested)
-  share-links.ts          role-carrying invite links (unit tested)
-  rate-limit.ts           in-memory sign-in limiter (unit tested)
-  permissions.ts          pure role resolution (unit tested)
+  auth.ts                 sessions (httpOnly cookie + Session table)
+  password.ts             scrypt hashing, session tokens
+  permissions.ts          pure role resolution
   access.ts               load document + enforce required role (used by every route)
-  import.ts               txt/md/docx -> HTML (unit tested)
-  tiptap-server.ts        HTML -> editor JSON, excerpt extraction
+  documents.ts            dashboard queries
+  versions.ts             snapshot coalescing, pruning, restore
+  export.ts, pdf.tsx      Markdown and PDF export
+  presence.ts             heartbeat presence
+  share-links.ts          role-carrying invite links
+  import.ts               txt/md/docx -> HTML
+  tiptap-server.ts        HTML <-> editor JSON, excerpts
   validation.ts           zod schemas and limits
+  rate-limit.ts           in-memory sign-in limiter
+e2e/                      Playwright specs
 samples/                  files to try the import with
-e2e/                      Playwright specs (auth, documents, sharing, import)
+design/                   original logo artwork
+.claude/skills/           design-engineering skills used during the build (MIT)
 ```
-
-See `ARCHITECTURE.md` for decisions and tradeoffs and `AI_WORKFLOW.md` for how AI tools were used.
-
-## Known limits
-
-- No real-time co-editing. Concurrent edits are detected (409) but not merged.
-- No email verification or password reset yet; no rate limiting on sign-in.
-- Import supports three text-based formats; images inside `.docx` are dropped.
-- No comments or suggestion mode; presence shows who is here but not live cursors.

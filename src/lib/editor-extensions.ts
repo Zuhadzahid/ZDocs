@@ -10,8 +10,8 @@ export function createExtensions() {
     StarterKit.configure({
       heading: { levels: [1, 2, 3] },
       link: { openOnClick: false, autolink: true },
-      // Not exposed in the toolbar; keep the schema small and predictable.
-      codeBlock: false,
+      // Code blocks are kept so imported Markdown fences (and inline code) survive;
+      // they are not in the toolbar. Horizontal rules stay out of the schema.
       horizontalRule: false,
     }),
   ];
