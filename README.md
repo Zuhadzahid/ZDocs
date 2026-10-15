@@ -5,7 +5,7 @@ engineering demo for the **Full Stack Product Engineer** role at **Ajaia**.
 
 - **Live application:** https://z-docs-ajaia.vercel.app/
 - **Repository:** https://github.com/Zuhadzahid/ZDocs
-- **Walkthrough video:** see `VIDEO_URL.txt`
+- **Walkthrough video:** https://www.loom.com/share/9185c165815644f0992fd8d3bb771e78
 
 Companion documents: [ARCHITECTURE.md](ARCHITECTURE.md) · [AI_WORKFLOW.md](AI_WORKFLOW.md) ·
 [TESTING.md](TESTING.md) · [SUBMISSION.md](SUBMISSION.md) · [WALKTHROUGH_SCRIPT.md](WALKTHROUGH_SCRIPT.md)

@@ -9,7 +9,7 @@ Product Engineer assignment by Zuhad Zahid.
 |---|---|
 | Live application | https://z-docs-ajaia.vercel.app/ |
 | GitHub repository | https://github.com/Zuhadzahid/ZDocs |
-| Walkthrough video | see `VIDEO_URL.txt` (unlisted) |
+| Walkthrough video | https://www.loom.com/share/9185c165815644f0992fd8d3bb771e78 (unlisted) |
 
 ## 2. Demo accounts
 
@@ -96,5 +96,5 @@ password reset. Details and estimates in `ARCHITECTURE.md`.
 - [x] Sample import files included
 - [x] Deployed to Vercel; live URL added to `README.md` and this file
 - [x] Demo data seeded against the production database
-- [ ] Walkthrough video recorded; link added to `VIDEO_URL.txt` and this file
+- [x] Walkthrough video recorded; link added to `VIDEO_URL.txt` and this file
 - [ ] Google Drive folder created with all materials and both links
