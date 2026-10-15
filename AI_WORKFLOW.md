@@ -53,21 +53,7 @@ quirks, and two timing failures exposed a focus bug and an optimistic-update rac
 went into the application or into the tests waiting on real network responses, never into
 loosened assertions.
 
-## 3. Examples of prompts used
-
-Paraphrased from the session, in the order they were used:
-
-1. *"This is a take-home I want to crack. Tell me what we have to do, using the framing from this system-design video."* → the plan, stack and cuts.
-2. *"Start the thing."* → scaffold, schema, seed, auth, API, pages, verification in the browser.
-3. *"Now I want proper authentication, a real person can authenticate with Gmail or any other email. Rename to ZDocs. Keep the three test users."* → scrypt passwords, Session table, optional Google OAuth, landing page.
-4. *"Add the Axiforma fonts and the logo everywhere, add shadcn/ui, build a Google-Docs-like sidebar: New document, My documents, Shared with me, Recent, Starred. Make it usable by a hundred thousand people concurrently."* → design system, dashboard, indexes, capped lists, the scaling section.
-5. *"Confirm: is this written as a senior engineer or a full-stack developer?"* → an honest list of what a senior reviewer would flag, which became the next round of work.
-6. *"Add Playwright so it becomes more good."* → sixteen specs.
-7. *"Tell me what takes more time to build out of these five stretch features."* → a ranked estimate.
-8. *"Do not build ranks 1, 2 and 3. Build 4 to 8 and test them properly."* → version history, export, share links, presence, with unit and e2e tests.
-9. *"Push the code using this repo. Do not add any Claude attribution; only my name."* → commit and push as me.
-
-## 4. How AI output was reviewed and verified
+## 3. How AI output was reviewed and verified
 
 - **Gates before every run:** `tsc --noEmit`, ESLint (including React Compiler rules), Vitest. Nothing was accepted red.
 - **API contract by `curl`:** 401 without a session (including the retired mock cookie), 403 for a viewer saving, an editor sharing, or exporting a document they cannot see, 404 for unknown ids, 400 for blank titles, unsupported imports and oversized files, 409 for conflicting saves.
@@ -76,7 +62,7 @@ Paraphrased from the session, in the order they were used:
 - **Reading the diff.** Every generated file was read before it was kept. Comments that explained *why* were kept; comments that restated the code were removed.
 - **Production build** run locally before deploy.
 
-## 5. What was changed or rejected
+## 4. What was changed or rejected
 
 | AI output | What I did instead | Why |
 |---|---|---|
@@ -95,9 +81,9 @@ Paraphrased from the session, in the order they were used:
 | Turndown's default list output (`-   item` with blank lines) | Custom list-item rule plus unwrapping single-paragraph items | Tight, conventional Markdown, pinned by a unit test |
 | Toolbar using `editor.isActive()` directly | `useEditorState` selectors | Tiptap v3 does not re-render on every transaction |
 
-## 6. Challenges and lessons
+## 5. Challenges and lessons
 
 - **AI is confident about frameworks it has not seen.** The single most valuable habit was making it read the installed docs before writing framework code.
 - **Hand verification is not enough.** Several things that "worked when I clicked them" failed under Playwright for real reasons. The suite found a focus bug and a race that a human demo would never have surfaced.
-- **Ask for the honest review.** Prompt 5 above ("senior or full-stack?") produced the most useful list of the session: integration tests, migrations, consistent dialogs, server-derived excerpts, skeletons, structured logging. Half of it shipped; the rest is listed as known gaps rather than hidden.
+- **Ask for the honest review.** Asking whether the code read as senior-level work produced the most useful list of the session: integration tests, migrations, consistent dialogs, server-derived excerpts, skeletons, structured logging. Half of it shipped; the rest is listed as known gaps rather than hidden.
 - **Decide, then delegate.** Scope (no comments, no live cursors), the data model, the conflict strategy and the presence approach were my calls. AI proposed options and implemented the decision; it did not make it.
