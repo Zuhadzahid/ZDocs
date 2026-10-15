@@ -76,7 +76,7 @@ Switch to `ARCHITECTURE.md` on GitHub for 20 seconds. Point at the ER diagram an
 
 ## 4:50 – 5:00  Closing
 
-> "Repo, README, architecture, testing and AI notes are in the Drive folder with the live URL and demo accounts. Thanks for watching."
+> "The repository has the README, architecture, testing and AI notes, the live URL and the demo accounts. Thanks for watching."
 
 ---
 

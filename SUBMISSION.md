@@ -30,21 +30,7 @@ The six project documents (README, Architecture, AI Workflow, Testing, Submissio
 Walkthrough Script) are seeded into Alice's account from these very files and shared with
 Bob (edit) and Carol (view), so the sharing model can be reviewed on real content.
 
-## 3. What is in the Drive folder
-
-| Item | File |
-|---|---|
-| Source code | `ZDocs/` (also the GitHub repository) |
-| Setup and run instructions | `README.md` |
-| Architecture note with four diagrams | `ARCHITECTURE.md` |
-| AI workflow note | `AI_WORKFLOW.md` |
-| Testing note with results | `TESTING.md` |
-| This file | `SUBMISSION.md` |
-| Video recording plan | `WALKTHROUGH_SCRIPT.md` |
-| Video link | `VIDEO_URL.txt` |
-| Sample files for the import feature | `samples/` |
-
-## 4. Implemented features
+## 3. Implemented features
 
 **Core**
 
@@ -72,7 +58,7 @@ Bob (edit) and Carol (view), so the sharing model can be reviewed on real conten
 - Scaling posture documented: pooled connections, indexes, capped lists, rate limiting, deferred side effects
 - Deployed on Vercel with Neon Postgres
 
-## 5. Known limitations
+## 4. Known limitations
 
 - No real-time co-editing or live cursors; concurrent edits are detected, not merged
 - No comments or suggestion mode
@@ -84,7 +70,7 @@ Bob (edit) and Carol (view), so the sharing model can be reviewed on real conten
 **With another 2–4 hours:** live cursors with Yjs, then comments anchored to text, then
 password reset. Details and estimates in `ARCHITECTURE.md`.
 
-## 6. Final submission checklist
+## 5. Final submission checklist
 
 - [x] Source code pushed to GitHub as Zuhad Zahid
 - [x] `README.md` with overview, stack, setup, environment variables, run and test instructions, limitations
@@ -97,4 +83,3 @@ password reset. Details and estimates in `ARCHITECTURE.md`.
 - [x] Deployed to Vercel; live URL added to `README.md` and this file
 - [x] Demo data seeded against the production database
 - [x] Walkthrough video recorded; link added to `VIDEO_URL.txt` and this file
-- [ ] Google Drive folder created with all materials and both links
