@@ -7,7 +7,7 @@ Product Engineer assignment by Zuhad Zahid.
 
 | Item | Link |
 |---|---|
-| Live application | _to be added after Vercel deployment_ |
+| Live application | https://z-docs-ajaia.vercel.app/ |
 | GitHub repository | https://github.com/Zuhadzahid/ZDocs |
 | Walkthrough video | see `VIDEO_URL.txt` (unlisted) |
 
@@ -89,12 +89,12 @@ password reset. Details and estimates in `ARCHITECTURE.md`.
 - [x] Source code pushed to GitHub as Zuhad Zahid
 - [x] `README.md` with overview, stack, setup, environment variables, run and test instructions, limitations
 - [x] `ARCHITECTURE.md` with system architecture, ER diagram, access flowchart, save sequence diagram, tradeoffs
-- [x] `AI_WORKFLOW.md` with tools, prompts, verification and corrections
+- [x] `AI_WORKFLOW.md` with tools, how AI helped, verification and corrections
 - [x] `TESTING.md` with frameworks, commands, coverage, manual checklist and results
 - [x] `WALKTHROUGH_SCRIPT.md` with the recording plan
 - [x] Demo accounts seeded and documented
 - [x] Sample import files included
-- [ ] Deployed to Vercel; live URL added to `README.md` and this file
-- [ ] Demo data seeded against the production database
+- [x] Deployed to Vercel; live URL added to `README.md` and this file
+- [x] Demo data seeded against the production database
 - [ ] Walkthrough video recorded; link added to `VIDEO_URL.txt` and this file
 - [ ] Google Drive folder created with all materials and both links

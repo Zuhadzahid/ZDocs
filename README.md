@@ -3,7 +3,7 @@
 A lightweight, Google-Docs-inspired collaborative document editor, built as the product
 engineering demo for the **Full Stack Product Engineer** role at **Ajaia**.
 
-- **Live application:** _added in `SUBMISSION.md` after deployment_
+- **Live application:** https://z-docs-ajaia.vercel.app/
 - **Repository:** https://github.com/Zuhadzahid/ZDocs
 - **Walkthrough video:** see `VIDEO_URL.txt`
 
@@ -151,8 +151,7 @@ Full test design, coverage, and the latest results are in `TESTING.md`.
 
 ## 8. Deployment
 
-The app is deployed on Vercel with a Neon Postgres database. The live URL is in
-`SUBMISSION.md`.
+The app is deployed on Vercel with a Neon Postgres database at https://z-docs-ajaia.vercel.app/
 
 To deploy your own copy:
 
