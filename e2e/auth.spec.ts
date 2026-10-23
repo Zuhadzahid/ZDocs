@@ -2,9 +2,10 @@ import { expect, test } from "@playwright/test";
 import { ALICE, signIn } from "./helpers";
 
 test.describe("authentication", () => {
-  test("landing page shows the demo wording and the auth card", async ({ page }) => {
+  test("landing page shows the hero, feature timeline and the auth card", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByText("Product engineering demo · Full Stack Product Engineer · AJAIA")).toBeVisible();
+    await expect(page.getByText("A small docs app for notes, drafts and quick sharing")).toBeVisible();
+    await expect(page.getByRole("region", { name: "What you can do with ZDocs" })).toBeVisible();
     await expect(page.getByRole("tab", { name: "Sign in" })).toBeVisible();
     await expect(page.getByRole("tab", { name: "Create account" })).toBeVisible();
   });

@@ -1,7 +1,8 @@
 # ZDocs
 
-A lightweight, Google-Docs-inspired collaborative document editor, built as the product
-engineering demo for the **Full Stack Product Engineer** role at **Ajaia**.
+A small, Google-Docs-inspired app for notes, drafts and quick sharing. Write or import a
+document, format it, share it with view or edit access, keep its history, export it.
+Originally built as a timeboxed product engineering demo; now a personal project.
 
 - **Live application:** https://z-docs-ajaia.vercel.app/
 - **Repository:** https://github.com/Zuhadzahid/ZDocs

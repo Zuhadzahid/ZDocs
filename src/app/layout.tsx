@@ -5,7 +5,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: { default: "ZDocs", template: "%s · ZDocs" },
-  description: "ZDocs: lightweight collaborative documents for teams. Product engineering demo.",
+  description: "ZDocs: a small docs app for notes, drafts and quick sharing. Write, import, share with view or edit access, keep history, export.",
   icons: { icon: "/logo-mark.png", apple: "/logo-mark.png" },
 };
 
