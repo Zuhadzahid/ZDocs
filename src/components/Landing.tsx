@@ -105,10 +105,6 @@ export function Landing({
               </li>
             ))}
           </ul>
-          <p className="mt-6 text-xs text-muted-foreground">
-            Demo project. Try it with <span className="font-medium text-foreground">alice@ajaia.test</span> and password{" "}
-            <span className="font-medium text-foreground">demo1234</span>, or create your own account.
-          </p>
         </div>
 
         <div className="flex justify-center lg:justify-end">
