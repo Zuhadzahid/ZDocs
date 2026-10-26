@@ -54,7 +54,7 @@ const props = {
     transitionDuration: 0.35, captionHighlightColor: "#1d5cf5", captionBackgroundColor: "rgba(255,255,255,0.85)",
   },
   cuts, overlays, captions: [],
-  audio: { music: { src: "zdocs/music.mp3", volume: 0.16, fadeInSeconds: 1.5, fadeOutSeconds: 3.5, offsetSeconds: 0, loop: false } },
+  audio: { music: { src: "zdocs/music.mp3", volume: 0.42, fadeInSeconds: 1.5, fadeOutSeconds: 3.5, offsetSeconds: 0, loop: false } },
 };
 writeFileSync(new URL("./edit.json", import.meta.url), JSON.stringify(props, null, 2));
 console.log(`edit.json: ${cuts.length} cuts, ${overlays.length} overlays, ${t.toFixed(1)}s total`);

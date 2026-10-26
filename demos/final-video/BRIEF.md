@@ -10,9 +10,9 @@ Playwright demo clips in `videos/`.
 - **Delivery:** one horizontal 1920x1080 MP4 at 30 fps, about 2:20 so it fits X/Twitter's
   limit as well as YouTube. No voice-over, no slides; the clips' own caption bars carry the
   explanation, plus a small section label per feature and a hero open and close.
-- **Music:** Kevin MacLeod, "Wallpaper" (incompetech.com), CC BY 4.0, from the
-  Archive.org discography item. Attribution line for the video description:
-  "Music: Wallpaper by Kevin MacLeod (incompetech.com), licensed under CC BY 4.0".
+- **Music:** Kevin MacLeod, "Aitech" (incompetech.com), CC BY 3.0, from the
+  Archive.org Incompetech item. Attribution line for the video description:
+  "Music: Aitech by Kevin MacLeod (incompetech.com), licensed under CC BY 3.0".
   Pixabay (OpenMontage's keyless music source) returned 403 and Wikimedia Commons was
   unreachable from this network, so Archive.org was used instead.
 - **Prep:** the Next.js dev badge was removed from each clip with ffmpeg `delogo`; the
