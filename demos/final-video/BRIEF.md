@@ -26,4 +26,4 @@ Playwright demo clips in `videos/`.
 3. Apply the one composer change recorded in `composer.patch` (makes the video vignette optional).
 4. `node demos/final-video/build-edit.mjs` to regenerate `edit.json`.
 5. From `remotion-composer`:
-   `npx remotion render src/index.tsx Explainer <out>/final-video.mp4 --props=<repo>/demos/final-video/edit.json --codec=h264 --crf=18`
+   `npx remotion render src/index.tsx Explainer <out>/Z-Docs-Final-Video.mp4 --props=<repo>/demos/final-video/edit.json --codec=h264 --crf=18`

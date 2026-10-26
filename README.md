@@ -7,6 +7,7 @@ Originally built as a timeboxed product engineering demo; now a personal project
 - **Live application:** https://z-docs-ajaia.vercel.app/
 - **Repository:** https://github.com/Zuhadzahid/ZDocs
 - **Walkthrough video:** https://www.loom.com/share/9185c165815644f0992fd8d3bb771e78
+- **Product video (2 min, no voice-over):** [videos/Z-Docs-Final-Video.mp4](videos/Z-Docs-Final-Video.mp4), cut from twelve scripted Playwright recordings; see [videos/INDEX.md](videos/INDEX.md)
 
 Companion documents: [ARCHITECTURE.md](ARCHITECTURE.md) · [AI_WORKFLOW.md](AI_WORKFLOW.md) ·
 [TESTING.md](TESTING.md) · [SUBMISSION.md](SUBMISSION.md) · [WALKTHROUGH_SCRIPT.md](WALKTHROUGH_SCRIPT.md)
@@ -140,6 +141,7 @@ window to see sharing and presence between two people.
 | `npm run db:push` | Apply the Prisma schema to the database |
 | `npm run db:seed` | Seed demo users, documents, shares, and the project docs |
 | `npm run db:cleanup-e2e` | Remove throwaway accounts created by the sign-up e2e test |
+| `npm run demos` | Record the twelve feature demo clips with Playwright and convert them to mp4 (local only) |
 | `npm run db:studio` | Prisma Studio to browse the data |
 
 Before the first e2e run install the browser:
