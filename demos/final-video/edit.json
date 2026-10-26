@@ -1,0 +1,445 @@
+{
+  "themeConfig": {
+    "primaryColor": "#1d5cf5",
+    "accentColor": "#1d5cf5",
+    "backgroundColor": "#f7f8fb",
+    "surfaceColor": "#ffffff",
+    "textColor": "#0b1633",
+    "mutedTextColor": "#4b5563",
+    "headingFont": "Space Grotesk",
+    "bodyFont": "Space Grotesk",
+    "chartColors": [
+      "#1d5cf5",
+      "#38bdf8",
+      "#10b981",
+      "#f59e0b"
+    ],
+    "springConfig": {
+      "damping": 20,
+      "stiffness": 120,
+      "mass": 1
+    },
+    "transitionDuration": 0.35,
+    "captionHighlightColor": "#1d5cf5",
+    "captionBackgroundColor": "rgba(255,255,255,0.85)"
+  },
+  "cuts": [
+    {
+      "id": "open",
+      "type": "hero_title",
+      "text": "ZDocs",
+      "heroSubtitle": "Write it down. Share it in seconds.",
+      "source": "",
+      "accentColor": "#1d5cf5",
+      "in_seconds": 0,
+      "out_seconds": 3.4,
+      "transition_in": "fade",
+      "transition_out": "fade",
+      "transition_duration": 0.6
+    },
+    {
+      "id": "landing",
+      "source": "zdocs/00-landing.mp4",
+      "source_in_seconds": 4,
+      "in_seconds": 3.4,
+      "out_seconds": 10.4,
+      "animation": "none",
+      "vignette": false,
+      "backgroundColor": "#f7f8fb",
+      "transition_in": "fade",
+      "transition_out": "fade",
+      "transition_duration": 0.35
+    },
+    {
+      "id": "write",
+      "source": "zdocs/01-write-it-down.mp4",
+      "source_in_seconds": 21,
+      "in_seconds": 10.4,
+      "out_seconds": 20.4,
+      "animation": "none",
+      "vignette": false,
+      "backgroundColor": "#f7f8fb",
+      "transition_in": "fade",
+      "transition_out": "fade",
+      "transition_duration": 0.35
+    },
+    {
+      "id": "import-a",
+      "source": "zdocs/02-import-files.mp4",
+      "source_in_seconds": 7,
+      "in_seconds": 20.4,
+      "out_seconds": 28.4,
+      "animation": "none",
+      "vignette": false,
+      "backgroundColor": "#f7f8fb",
+      "transition_in": "fade",
+      "transition_out": "fade",
+      "transition_duration": 0.35
+    },
+    {
+      "id": "import-b",
+      "source": "zdocs/02-import-files.mp4",
+      "source_in_seconds": 25,
+      "in_seconds": 28.4,
+      "out_seconds": 31.4,
+      "animation": "none",
+      "vignette": false,
+      "backgroundColor": "#f7f8fb",
+      "transition_in": "fade",
+      "transition_out": "fade",
+      "transition_duration": 0.35
+    },
+    {
+      "id": "share-a",
+      "source": "zdocs/03-share-by-email.mp4",
+      "source_in_seconds": 10,
+      "in_seconds": 31.4,
+      "out_seconds": 42.4,
+      "animation": "none",
+      "vignette": false,
+      "backgroundColor": "#f7f8fb",
+      "transition_in": "fade",
+      "transition_out": "fade",
+      "transition_duration": 0.35
+    },
+    {
+      "id": "share-b",
+      "source": "zdocs/03-share-by-email.mp4",
+      "source_in_seconds": 38,
+      "in_seconds": 42.4,
+      "out_seconds": 46.9,
+      "animation": "none",
+      "vignette": false,
+      "backgroundColor": "#f7f8fb",
+      "transition_in": "fade",
+      "transition_out": "fade",
+      "transition_duration": 0.35
+    },
+    {
+      "id": "link-a",
+      "source": "zdocs/04-share-link.mp4",
+      "source_in_seconds": 12,
+      "in_seconds": 46.9,
+      "out_seconds": 51.9,
+      "animation": "none",
+      "vignette": false,
+      "backgroundColor": "#f7f8fb",
+      "transition_in": "fade",
+      "transition_out": "fade",
+      "transition_duration": 0.35
+    },
+    {
+      "id": "link-b",
+      "source": "zdocs/04-share-link.mp4",
+      "source_in_seconds": 24,
+      "in_seconds": 51.9,
+      "out_seconds": 56.9,
+      "animation": "none",
+      "vignette": false,
+      "backgroundColor": "#f7f8fb",
+      "transition_in": "fade",
+      "transition_out": "fade",
+      "transition_duration": 0.35
+    },
+    {
+      "id": "link-c",
+      "source": "zdocs/04-share-link.mp4",
+      "source_in_seconds": 46,
+      "in_seconds": 56.9,
+      "out_seconds": 59.9,
+      "animation": "none",
+      "vignette": false,
+      "backgroundColor": "#f7f8fb",
+      "transition_in": "fade",
+      "transition_out": "fade",
+      "transition_duration": 0.35
+    },
+    {
+      "id": "presence",
+      "source": "zdocs/05-presence.mp4",
+      "source_in_seconds": 17,
+      "in_seconds": 59.9,
+      "out_seconds": 68.9,
+      "animation": "none",
+      "vignette": false,
+      "backgroundColor": "#f7f8fb",
+      "transition_in": "fade",
+      "transition_out": "fade",
+      "transition_duration": 0.35
+    },
+    {
+      "id": "history",
+      "source": "zdocs/06-version-history.mp4",
+      "source_in_seconds": 20,
+      "in_seconds": 68.9,
+      "out_seconds": 80.9,
+      "animation": "none",
+      "vignette": false,
+      "backgroundColor": "#f7f8fb",
+      "transition_in": "fade",
+      "transition_out": "fade",
+      "transition_duration": 0.35
+    },
+    {
+      "id": "export",
+      "source": "zdocs/07-export.mp4",
+      "source_in_seconds": 11,
+      "in_seconds": 80.9,
+      "out_seconds": 89.9,
+      "animation": "none",
+      "vignette": false,
+      "backgroundColor": "#f7f8fb",
+      "transition_in": "fade",
+      "transition_out": "fade",
+      "transition_duration": 0.35
+    },
+    {
+      "id": "dash-a",
+      "source": "zdocs/08-dashboard.mp4",
+      "source_in_seconds": 8,
+      "in_seconds": 89.9,
+      "out_seconds": 98.9,
+      "animation": "none",
+      "vignette": false,
+      "backgroundColor": "#f7f8fb",
+      "transition_in": "fade",
+      "transition_out": "fade",
+      "transition_duration": 0.35
+    },
+    {
+      "id": "dash-b",
+      "source": "zdocs/08-dashboard.mp4",
+      "source_in_seconds": 29,
+      "in_seconds": 98.9,
+      "out_seconds": 104.9,
+      "animation": "none",
+      "vignette": false,
+      "backgroundColor": "#f7f8fb",
+      "transition_in": "fade",
+      "transition_out": "fade",
+      "transition_duration": 0.35
+    },
+    {
+      "id": "acct-a",
+      "source": "zdocs/09-accounts.mp4",
+      "source_in_seconds": 4,
+      "in_seconds": 104.9,
+      "out_seconds": 111.9,
+      "animation": "none",
+      "vignette": false,
+      "backgroundColor": "#f7f8fb",
+      "transition_in": "fade",
+      "transition_out": "fade",
+      "transition_duration": 0.35
+    },
+    {
+      "id": "acct-b",
+      "source": "zdocs/09-accounts.mp4",
+      "source_in_seconds": 23,
+      "in_seconds": 111.9,
+      "out_seconds": 117.9,
+      "animation": "none",
+      "vignette": false,
+      "backgroundColor": "#f7f8fb",
+      "transition_in": "fade",
+      "transition_out": "fade",
+      "transition_duration": 0.35
+    },
+    {
+      "id": "conflict",
+      "source": "zdocs/10-conflict-detection.mp4",
+      "source_in_seconds": 19,
+      "in_seconds": 117.9,
+      "out_seconds": 128.9,
+      "animation": "none",
+      "vignette": false,
+      "backgroundColor": "#f7f8fb",
+      "transition_in": "fade",
+      "transition_out": "fade",
+      "transition_duration": 0.35
+    },
+    {
+      "id": "mobile",
+      "source": "zdocs/11-mobile.mp4",
+      "source_in_seconds": 4,
+      "in_seconds": 128.9,
+      "out_seconds": 136.9,
+      "animation": "none",
+      "vignette": false,
+      "backgroundColor": "#f7f8fb",
+      "transition_in": "fade",
+      "transition_out": "fade",
+      "transition_duration": 0.35
+    },
+    {
+      "id": "close",
+      "type": "hero_title",
+      "text": "ZDocs",
+      "heroSubtitle": "z-docs-ajaia.vercel.app  ·  github.com/Zuhadzahid/ZDocs",
+      "source": "",
+      "accentColor": "#1d5cf5",
+      "in_seconds": 136.9,
+      "out_seconds": 140.5,
+      "transition_in": "fade",
+      "transition_out": "fade",
+      "transition_duration": 0.6
+    }
+  ],
+  "overlays": [
+    {
+      "type": "section_title",
+      "text": "A small docs app",
+      "subtitle": "for notes, drafts and quick sharing",
+      "position": "bottom-left",
+      "in_seconds": 3.6,
+      "out_seconds": 10.2
+    },
+    {
+      "type": "section_title",
+      "text": "Write it down",
+      "subtitle": "01 / 07",
+      "position": "bottom-left",
+      "in_seconds": 10.6,
+      "out_seconds": 20.2
+    },
+    {
+      "type": "section_title",
+      "text": "Bring in your files",
+      "subtitle": "02 / 07",
+      "position": "bottom-left",
+      "in_seconds": 20.6,
+      "out_seconds": 28.2
+    },
+    {
+      "type": "section_title",
+      "text": "Bring in your files",
+      "subtitle": "02 / 07",
+      "position": "bottom-left",
+      "in_seconds": 28.6,
+      "out_seconds": 31.2
+    },
+    {
+      "type": "section_title",
+      "text": "Share with the right people",
+      "subtitle": "03 / 07",
+      "position": "bottom-left",
+      "in_seconds": 31.6,
+      "out_seconds": 42.2
+    },
+    {
+      "type": "section_title",
+      "text": "Share with the right people",
+      "subtitle": "03 / 07",
+      "position": "bottom-left",
+      "in_seconds": 42.6,
+      "out_seconds": 46.7
+    },
+    {
+      "type": "section_title",
+      "text": "Or just send a link",
+      "subtitle": "04 / 07",
+      "position": "bottom-left",
+      "in_seconds": 47.1,
+      "out_seconds": 51.7
+    },
+    {
+      "type": "section_title",
+      "text": "Or just send a link",
+      "subtitle": "04 / 07",
+      "position": "bottom-left",
+      "in_seconds": 52.1,
+      "out_seconds": 56.7
+    },
+    {
+      "type": "section_title",
+      "text": "Or just send a link",
+      "subtitle": "04 / 07",
+      "position": "bottom-left",
+      "in_seconds": 57.1,
+      "out_seconds": 59.7
+    },
+    {
+      "type": "section_title",
+      "text": "See who is here",
+      "subtitle": "05 / 07",
+      "position": "bottom-left",
+      "in_seconds": 60.1,
+      "out_seconds": 68.7
+    },
+    {
+      "type": "section_title",
+      "text": "Go back in time",
+      "subtitle": "06 / 07",
+      "position": "bottom-left",
+      "in_seconds": 69.1,
+      "out_seconds": 80.7
+    },
+    {
+      "type": "section_title",
+      "text": "Take it with you",
+      "subtitle": "07 / 07",
+      "position": "bottom-left",
+      "in_seconds": 81.1,
+      "out_seconds": 89.7
+    },
+    {
+      "type": "section_title",
+      "text": "Your dashboard",
+      "subtitle": "My documents · Shared · Recent · Starred",
+      "position": "bottom-left",
+      "in_seconds": 90.1,
+      "out_seconds": 98.7
+    },
+    {
+      "type": "section_title",
+      "text": "Your dashboard",
+      "subtitle": "Rename and delete from the card",
+      "position": "bottom-left",
+      "in_seconds": 99.1,
+      "out_seconds": 104.7
+    },
+    {
+      "type": "section_title",
+      "text": "Accounts",
+      "subtitle": "Sign up with any email",
+      "position": "bottom-left",
+      "in_seconds": 105.1,
+      "out_seconds": 111.7
+    },
+    {
+      "type": "section_title",
+      "text": "Accounts",
+      "subtitle": "Wrong passwords are refused",
+      "position": "bottom-left",
+      "in_seconds": 112.1,
+      "out_seconds": 117.7
+    },
+    {
+      "type": "section_title",
+      "text": "Conflict detection",
+      "subtitle": "No silent overwrites",
+      "position": "bottom-left",
+      "in_seconds": 118.1,
+      "out_seconds": 128.7
+    },
+    {
+      "type": "section_title",
+      "text": "On a phone",
+      "subtitle": "Same app, one column",
+      "position": "bottom-left",
+      "in_seconds": 129.1,
+      "out_seconds": 136.7
+    }
+  ],
+  "captions": [],
+  "audio": {
+    "music": {
+      "src": "zdocs/music.mp3",
+      "volume": 0.16,
+      "fadeInSeconds": 1.5,
+      "fadeOutSeconds": 3.5,
+      "offsetSeconds": 0,
+      "loop": false
+    }
+  }
+}

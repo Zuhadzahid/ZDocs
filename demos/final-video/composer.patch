@@ -1,0 +1,38 @@
+diff --git a/remotion-composer/src/Explainer.tsx b/remotion-composer/src/Explainer.tsx
+index 707e6db..587b39a 100644
+--- a/remotion-composer/src/Explainer.tsx
++++ b/remotion-composer/src/Explainer.tsx
+@@ -422,6 +422,8 @@ const VideoScene: React.FC<{
+   transitionDuration?: number;
+   sceneDurationSeconds: number;
+   backgroundColor?: string;
++  /** Set false for screen recordings, where darkened edges hide UI. */
++  vignette?: boolean;
+ }> = ({
+   src,
+   startFrom = 0,
+@@ -430,6 +432,7 @@ const VideoScene: React.FC<{
+   transitionDuration,
+   sceneDurationSeconds,
+   backgroundColor = "#0F172A",
++  vignette = true,
+ }) => {
+   const frame = useCurrentFrame();
+   const { fps } = useVideoConfig();
+@@ -468,7 +471,7 @@ const VideoScene: React.FC<{
+         }}
+         muted
+       />
+-      <Vignette />
++      {vignette && <Vignette />}
+     </AbsoluteFill>
+   );
+ };
+@@ -756,6 +759,7 @@ const SceneRenderer: React.FC<{ cut: Cut; theme: ThemeConfig }> = ({ cut, theme
+         transitionIn={cut.transition_in}
+         transitionOut={cut.transition_out}
+         transitionDuration={cut.transition_duration}
++        vignette={cut.vignette}
+         sceneDurationSeconds={cut.out_seconds - cut.in_seconds}
+         backgroundColor={cut.backgroundColor}
+       />,
